@@ -1,37 +1,22 @@
 import Head from "next/head";
-import {StyledBGContainer} from '../styles/StyledBGContainer';
-import {StyledMainContainer} from '../styles/StyledMainContainer';
-import Clock from '../components/Clock';
 import { useQuery } from "react-query";
 import React, { useEffect, useState } from "react";
-
+import Infographics from '../components/Infographics';
+import BackgroundSlides from '../components/BackgroundSlides';
+import {StyledLoadingScreen} from '../styles/StyledLoadingScreen';
+import { connect } from "react-redux";
+import { adjustDelayDuration } from "../store/settings/settingsActions";
 
 function usePosts() {
-  return useQuery("posts", async () => {
-    let data  = await fetch(
-      `/api/getData`
-    ).then((res) => res.json());
+  return useQuery("images", async () => {
+    let data = await fetch(`/api/popularImg`).then((res) => res.json());
     return data;
   });
 }
 
-function arrangeImage(array) {
-  let imageEle = array.map(item => <img key={item.id} src={item.urls.regular}></img>)
-  return imageEle
-}
-
-export default function Home() {
+function Home(props) {
   const response = usePosts();
-  const [imageArray, setImageArray] = useState(false);
-
-  useEffect(() => {
-    if (response.isSuccess) {
-      setImageArray(arrangeImage(response.data.unsplashData))
-    }
-    console.log(response.data)
-  }, [response.status]);
-
-  if (response.isSuccess && imageArray ) {
+  if (response.isSuccess) {
     return (
       <div>
         <Head>
@@ -39,18 +24,30 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main>
-          <StyledBGContainer viewTime={5} delay={5} imageArray={response.data.unsplashData} numOfImg={response.data.unsplashData.length}>
-            {imageArray}
-          </StyledBGContainer>
-          <StyledMainContainer>
-          <Clock/>
-          </StyledMainContainer>
+          <BackgroundSlides/>
+          {!props.loadingImages && <Infographics/>}
         </main>
-        <footer></footer>
       </div>
     );
   } else {
-    return <div>sd</div>;
+    return <StyledLoadingScreen>Loading</StyledLoadingScreen>; 
   }
 }
 
+//step 1
+const mapStateToProps = (state) => {
+  return {
+    delay: state.settings.delay,
+    loadingImages: state.general.loadingImages,
+  };
+};
+
+//step 2
+const mapDispatchToProps = (dispatch) => {
+  return {
+    adjustDelayDuration: () => dispatch(adjustDelayDuration()),
+  };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

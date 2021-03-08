@@ -1,23 +1,29 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { QueryClientProvider, QueryClient } from "react-query";
 import '../styles/globals.css'
+import {wrapper} from '../store/store';
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
+  * {
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const theme = {
   colors: {
-    primary: "#0070f3",
+    primary: "#e3e3e3",
   },
 };
 
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
@@ -29,3 +35,5 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
+
+export default wrapper.withRedux(App);

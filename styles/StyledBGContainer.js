@@ -1,5 +1,6 @@
 import styled, { keyframes, css } from "styled-components";
 
+//more information on the formula:
 const ImageFadeAnimation = ({ viewTime, delay, numOfImg }) => {
   let totalAnimationTime = (viewTime + delay) * numOfImg;
   let animationInterval = viewTime + delay;
@@ -29,7 +30,6 @@ export const StyledBGContainer = styled.div`
   height: 100vh;
   width: 100vw;
   position: relative;
-
   & img {
     position: absolute;
     top: 0;
@@ -37,9 +37,14 @@ export const StyledBGContainer = styled.div`
     height: 100%;
     width: 100%;
     object-fit: cover;
+    transform: translateZ(0);
     animation-name: ${(props) => ImageFadeAnimation(props)};
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
+    animation-play-state: ${(props) =>
+      props.paused
+        ? "paused"
+        : "running"}; //use this for interception during settings
     animation-duration: ${({ viewTime, delay, numOfImg }) =>
       `${(viewTime + delay) * numOfImg}s`};
   }
@@ -47,11 +52,11 @@ export const StyledBGContainer = styled.div`
     let templateLiteral = ``;
     let delayInterval = 0;
     imageArray.map((item, idx) => {
-        //last item should contain 0delay because its the first item on top.
+      //last item should contain 0delay because its the first item on top.
       templateLiteral += `& img:nth-of-type(${numOfImg - idx}) {
     animation-delay: ${delayInterval}s;
   }`;
-      delayInterval += (viewTime + delay) ;
+      delayInterval += viewTime + delay;
     });
 
     return templateLiteral;
