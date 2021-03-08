@@ -30,7 +30,7 @@ function Home(props) {
       </div>
     );
   } else {
-    return <StyledLoadingScreen>Loading</StyledLoadingScreen>; 
+    return <StyledLoadingScreen>Getting Weather</StyledLoadingScreen>; 
   }
 }
 
