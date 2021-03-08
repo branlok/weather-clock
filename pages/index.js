@@ -1,50 +1,56 @@
 import Head from "next/head";
-import styled from "styled-components";
-import {unsplash} from "../jsonplaceholder/placeholder";
-
-const StyledContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-image: ${props => props.bg ? `url(${props.bg})` : null};
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 100px;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-
-`;
-
-export async function getServerSideProps(context) {
-  // Fetch data from external API
-  const res = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?q=toronto&appid=8d1743747c31891715f9630797254e86`
-  );
-  const weatherData = await res.json();
-  const unsplashData = unsplash;
+import {StyledBGContainer} from '../styles/StyledBGContainer';
+import {StyledMainContainer} from '../styles/StyledMainContainer';
+import Clock from '../components/Clock';
+import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
 
 
-  // Pass data to the page via props
-  return { props: { weatherData, unsplashData } };
+function usePosts() {
+  return useQuery("posts", async () => {
+    let data  = await fetch(
+      "http://localhost:3000/api/getData"
+    ).then((res) => res.json());
+    return data;
+  });
 }
 
-export default function Home({ weatherData, unsplashData }) {
-  
-  
-  // console.log(unsplashData);
-  return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <StyledContainer bg={unsplashData[2].urls.full}>{weatherData.weather[0].main}</StyledContainer>
-      </main>
-
-      <footer></footer>
-    </div>
-  );
+function arrangeImage(array) {
+  let imageEle = array.map(item => <img key={item.id} src={item.urls.regular}></img>)
+  return imageEle
 }
+
+export default function Home() {
+  const response = usePosts();
+  const [imageArray, setImageArray] = useState(false);
+
+  useEffect(() => {
+    if (response.isSuccess) {
+      setImageArray(arrangeImage(response.data.unsplashData))
+    }
+    console.log(response.data)
+  }, [response.status]);
+
+  if (response.isSuccess && imageArray ) {
+    return (
+      <div>
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <main>
+          <StyledBGContainer viewTime={5} delay={5} imageArray={response.data.unsplashData} numOfImg={response.data.unsplashData.length}>
+            {imageArray}
+          </StyledBGContainer>
+          <StyledMainContainer>
+          <Clock/>
+          </StyledMainContainer>
+        </main>
+        <footer></footer>
+      </div>
+    );
+  } else {
+    return <div>sd</div>;
+  }
+}
+
