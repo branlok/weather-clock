@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 function usePosts() {
   return useQuery("posts", async () => {
     let data  = await fetch(
-      "http://localhost:3000/api/getData"
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getData`
     ).then((res) => res.json());
     return data;
   });
