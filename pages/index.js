@@ -6,6 +6,7 @@ import BackgroundSlides from '../components/BackgroundSlides';
 import {StyledLoadingScreen} from '../styles/StyledLoadingScreen';
 import { connect } from "react-redux";
 import { adjustDelayDuration } from "../store/settings/settingsActions";
+import Settings from "../components/Settings";
 
 function usePosts() {
   return useQuery("images", async () => {
@@ -16,16 +17,19 @@ function usePosts() {
 
 function Home(props) {
   const response = usePosts();
+  const [showSettings, setShowSettings] = useState(false)
+  
   if (response.isSuccess) {
     return (
       <div>
         <Head>
-          <title>Create Next App</title>
+          <title>Weather Clock App</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main>
+        <main className="main-wrapper">
           <BackgroundSlides/>
-          {!props.loadingImages && <Infographics/>}
+          {!props.loadingImages && <Infographics setShowSettings={setShowSettings}/>}
+          {showSettings && <Settings setShowSettings={setShowSettings}/>}
         </main>
       </div>
     );
@@ -39,6 +43,7 @@ const mapStateToProps = (state) => {
   return {
     delay: state.settings.delay,
     loadingImages: state.general.loadingImages,
+
   };
 };
 

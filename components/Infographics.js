@@ -21,7 +21,7 @@ function Infographics(props) {
           {data.weatherData.weather[0].description}
         </p>
       </StyledWeatherInformation>
-      <img className="settings-button" src="/settings-svgrepo-com-2.svg"></img>
+      <img className="settings-button" src="/settings-svgrepo-com-2.svg" onClick={() => props.setShowSettings(true)}></img>
     </StyledMainContainer>
   );
 }

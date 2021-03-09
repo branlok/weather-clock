@@ -11,11 +11,6 @@ function BackgroundSlides(props) {
   console.log(status);
 
   const [imgsLoaded, setImgsLoaded] = useState(false)
-//   useEffect(() => {
-//     if (status === "success") {
-//       setImageArray(;
-//     }
-//   }, [status]);
 
 useEffect(() => {
     const loadImage = image => {
@@ -30,17 +25,15 @@ useEffect(() => {
 
     Promise.all(data.unsplashData.map(image => loadImage(image)))
       .then(() => setImgsLoaded(true))
+      .then(() => props.loadingImages())
       .catch(err => console.log("Failed to load images", err))
   }, [])
-
-
 
 
   function arrangeImage(array) {
     let imageEle = array.map((item) => (
       <img key={item.id} src={item.urls.regular}></img>
     ));
-    props.loadingImages();
     return imageEle;
   }
 
@@ -48,10 +41,11 @@ useEffect(() => {
     <>
       {imgsLoaded ? 
       <StyledBGContainer
-        viewTime={15}
-        delay={2}
+        viewTime={props.presence}
+        delay={props.delay}
         imageArray={data.unsplashData}
         numOfImg={data.unsplashData.length}
+    
       >
         {arrangeImage(data.unsplashData)}
       </StyledBGContainer>
@@ -68,6 +62,9 @@ useEffect(() => {
 const mapStateToProps = (state) => {
   return {
     delay: state.settings.delay,
+    presence: state.settings.presence,
+    brightness: state.settings.brightness,
+
   };
 };
 

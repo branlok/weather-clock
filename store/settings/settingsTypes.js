@@ -1,2 +1,4 @@
 export const ADJUST_DELAY_DURATION = "ADJUST_DELAY_DURATION"
 export const ADJUST_PRESENCE_DURATION = "ADJUST_PRESENCE_DURATION"
+export const ADJUST_BRIGHTNESS_DURATION = "ADJUST_BRIGHTNESS_DURATION"
+//just a convention to prevent spelling mistakes

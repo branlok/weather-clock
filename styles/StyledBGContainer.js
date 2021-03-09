@@ -4,7 +4,7 @@ import styled, { keyframes, css } from "styled-components";
 const ImageFadeAnimation = ({ viewTime, delay, numOfImg }) => {
   let totalAnimationTime = (viewTime + delay) * numOfImg;
   let animationInterval = viewTime + delay;
-  console.log();
+  console.log(totalAnimationTime, animationInterval);
   return keyframes`
   0% {
     opacity:1;
