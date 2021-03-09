@@ -31,7 +31,7 @@ function BackgroundSlides(props) {
         </StyledBGContainer>
       );
   } else {
-      return <StyledLoadingScreen> Getting Hi-res Images </StyledLoadingScreen>
+      return <StyledLoadingScreen> Getting Weather </StyledLoadingScreen>
   }
 }
 
