@@ -37,7 +37,7 @@ function BackgroundSlides(props) {
 
 function arrangeImage(array) {
   let imageEle = array.map((item) => (
-    <img key={item.id} src={item.urls.full}></img>
+    <img key={item.id} src={item.urls.regular}></img>
   ));
   
   return imageEle;
