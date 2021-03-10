@@ -1,5 +1,14 @@
 import styled, { keyframes, css } from "styled-components";
 
+const fadeIn = keyframes`
+    from {
+        {opacity: 0}
+    }
+    to {
+        {opacity: 1}
+    }
+`;
+
 export const StyledWeatherInformation = styled.div`
     display: flex;
     justify-content: center;
@@ -8,6 +17,7 @@ export const StyledWeatherInformation = styled.div`
     border-radius: 15px;
     background-color: rgba(0,0,0,0.9);
     padding: 1.5vw 7vw;
+    animation: ${fadeIn} 0.5s ease 1 backwards;
     .temperature {
         font-size: 5vw;
         height: calc(100% - 20px);

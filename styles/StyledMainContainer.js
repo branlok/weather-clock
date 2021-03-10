@@ -1,5 +1,14 @@
 import styled, { keyframes, css } from "styled-components";
 
+const fadeIn = keyframes`
+    from {
+        {opacity: 0}
+    }
+    to {
+        {opacity: 1}
+    }
+`;
+
 export const StyledMainContainer = styled.div`
   position: absolute;
   top: 0px;
@@ -14,10 +23,11 @@ export const StyledMainContainer = styled.div`
   font-size: 10vw;
   color: #f5f5f5;
   font-family: 'Work Sans', sans-serif;
-  background-color: rgba(0,0,0,0);
+  background-color: ${props => `rgba(0,0,0, ${(100 - props.brightness)/100})`};
   /* box-shadow: inset 0px 0px 250px rgba(0,0,0,0.5); */
   .time {
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    animation: ${fadeIn} 0.5s ease 1 backwards;
   }
   .settings-button {
       position: absolute;
@@ -26,8 +36,10 @@ export const StyledMainContainer = styled.div`
       height: 25px;
       transition: 0.5s;
       cursor: pointer;
+      animation: ${fadeIn} 0.5s ease 1 backwards;
       &:hover {
           transform: rotate(20deg);
+          fill: black;
       }
   }
 `;

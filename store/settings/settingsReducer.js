@@ -1,28 +1,52 @@
-import {ADJUST_PRESENCE_DURATION, ADJUST_DELAY_DURATION, ADJUST_BRIGHTNESS_DURATION} from './settingsTypes';
-import {HYDRATE} from 'next-redux-wrapper';
+import {
+  ADJUST_PRESENCE_DURATION,
+  ADJUST_DELAY_DURATION,
+  ADJUST_BRIGHTNESS_DURATION,
+  SET_NUMBER_OF_IMAGES,
+  SET_RELEVANCE,
+  SET_IMAGE_QUALITY,
+  SET_KEYWORD,
+} from "./settingsTypes";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
-    presence: 5,
-    delay: 2,
-    brightness: 80,
-}
+  presence: 4,
+  delay: 8,
+  brightness: 100,
+  relevance: "weather", //time, topic
+  imageQuality: "optimized", //optimized,
+  numOfImages: 10,
+  keyword: "",
+};
 
 export const settingsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE: {
-            return {...state, ...action.payload};
-        }
-        case ADJUST_PRESENCE_DURATION: {
-            return {...state, presence: action.payload}
-        }
-        case ADJUST_DELAY_DURATION: {
-            return {...state, delay: action.payload}
-        }
-        case ADJUST_BRIGHTNESS_DURATION: {
-            return {...state, brightness: action.payload}
-        }
-        default: {
-            return state
-        }
+  switch (action.type) {
+    case HYDRATE: {
+      return { ...state, ...action.payload };
     }
-}
+    case ADJUST_PRESENCE_DURATION: {
+      return { ...state, presence: action.payload };
+    }
+    case ADJUST_DELAY_DURATION: {
+      return { ...state, delay: action.payload };
+    }
+    case ADJUST_BRIGHTNESS_DURATION: {
+      return { ...state, brightness: action.payload };
+    }
+    case SET_RELEVANCE: {
+      return { ...state, relevance: action.payload };
+    }
+    case SET_IMAGE_QUALITY: {
+      return { ...state, imageQuality: action.payload };
+    }
+    case SET_NUMBER_OF_IMAGES: {
+      return { ...state, numOfImages: action.payload };
+    }
+    case SET_KEYWORD: {
+        return {...state, keyword: action.payload}
+    }
+    default: {
+      return state;
+    }
+  }
+};

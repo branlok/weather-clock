@@ -8,15 +8,15 @@ import { connect } from "react-redux";
 import { adjustDelayDuration } from "../store/settings/settingsActions";
 import Settings from "../components/Settings";
 
-function usePosts() {
-  return useQuery("images", async () => {
+function usePosts(relevance) {
+  return useQuery(relevance, async () => {
     let data = await fetch(`/api/popularImg`).then((res) => res.json());
     return data;
   });
 }
 
 function Home(props) {
-  const response = usePosts();
+  const response = usePosts(props.relevance, props.keyword);
   const [showSettings, setShowSettings] = useState(false)
   
   if (response.isSuccess) {
@@ -27,14 +27,14 @@ function Home(props) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="main-wrapper">
-          <BackgroundSlides/>
-          {!props.loadingImages && <Infographics setShowSettings={setShowSettings}/>}
-          {showSettings && <Settings setShowSettings={setShowSettings}/>}
+          {!showSettings && <BackgroundSlides/>}
+          {!props.loadingImages && !props.modified && <Infographics setShowSettings={setShowSettings}/>}
+          {showSettings && <Settings showSettings={showSettings} setShowSettings={setShowSettings}/>}
         </main>
       </div>
     );
   } else {
-    return <StyledLoadingScreen>Getting Weather</StyledLoadingScreen>; 
+    return <StyledLoadingScreen>Getting Weather and getting Data</StyledLoadingScreen>; 
   }
 }
 
@@ -42,8 +42,11 @@ function Home(props) {
 const mapStateToProps = (state) => {
   return {
     delay: state.settings.delay,
+    relevance: state.settings.relevance,
+    keyword: state.settings.keyword,
     loadingImages: state.general.loadingImages,
-
+    modified: state.general.modified,
+    
   };
 };
 

@@ -1,5 +1,15 @@
 import styled, { keyframes, css } from "styled-components";
 
+const fadeIn = keyframes`
+from {
+  {opacity: 0
+  };
+}
+to {
+  {opacity: 1};
+}
+`
+
 //more information on the formula:
 const ImageFadeAnimation = ({ viewTime, delay, numOfImg }) => {
   let totalAnimationTime = (viewTime + delay) * numOfImg;
@@ -22,7 +32,6 @@ const ImageFadeAnimation = ({ viewTime, delay, numOfImg }) => {
       opacity: 1;
   }
 
-
 `;
 };
 
@@ -30,6 +39,9 @@ export const StyledBGContainer = styled.div`
   height: 100vh;
   width: 100vw;
   position: relative;
+  perspective: 500px;
+  overflow: hidden;
+  animation: ${fadeIn} 1s ease 1 backwards;
   & img {
     position: absolute;
     top: 0;

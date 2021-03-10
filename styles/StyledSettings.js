@@ -2,10 +2,10 @@ import styled, { keyframes, css } from "styled-components";
 
 const transitionIn = keyframes`
     from {
-        {left: 100%}
+        {transform: rotate(-180deg)}
     }
     to {
-        {left: 0px}
+        {transform: rotate(0deg)}
     }
 `;
 
@@ -25,7 +25,7 @@ export const StyledSettings = styled.div`
   height: 100%;
   width: 100%;
   z-index: 2;
-  animation: ${fadeIn} 1s ease 1;
+
   background-color: #1c1c1c;
   font-family: "Work Sans", sans-serif;
   color: white;
@@ -34,7 +34,9 @@ export const StyledSettings = styled.div`
   padding: 20px;
   .title {
     h1 {
+        height: 50px;
       font-size: 50px;
+      margin-left: 20px;
     }
   }
   .settings-button {
@@ -45,24 +47,63 @@ export const StyledSettings = styled.div`
     transition: 0.5s;
     z-index: 3;
     cursor: pointer;
-    animation: ${fadeIn} 1s ease 1 backwards;
-    animation-delay: 1s;
+    animation: ${transitionIn} 0.5s ease 1 backwards;
+    fill: grey;
     &:hover {
-      transform: rotate(20deg);
+      fill: white;
     }
   }
+  button {
+      cursor: pointer;
+  }
+  .reset-button {
+    position: absolute;
+    background-color: transparent;
+    color: red;
+    font-weight: bold;
+    height: 25px;
+    padding: 0px 20px;
+    top: 10px;
+    right: 210px;
+    right: 50px;
+    border-style: none;
+    border-radius: 3px;
+    transition: 0.2s;
+    border: 2px solid red;
+    &:hover {
+        color: white;
+        background-color: red;
+        border: 2px solid transparnet;
+    }
+  }
+  /* .update-button {
+    position: absolute;
+    background-color:${props => props.modified ? "#edb84e" :  "rgba(0,0,0,0.2)"}  ;
+    color: white;
+    font-weight: bold;
+    height: 25px;
+    padding: 0px 20px;
+    top: 10px;
+    right: 50px;
+    border-style: none;
+    border-radius: 3px;
+    transition: 0.5s;
+    &:hover {
+        background-color: #39c72a;
+        
+    }
+  } */
 `;
 
 export const StyledConfigContainer = styled.div`
   height: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px 100px;
+  padding: 0px 50px;
   nav {
     width: 200px;
-    height: 70%;
+    height: 80%;
     border-right: 3px solid white;
     display: flex;
     justify-content: flex-end;
@@ -73,57 +114,268 @@ export const StyledConfigContainer = styled.div`
       list-style: none;
       text-align: right;
       li {
-          font-size: 30px;
-          margin-bottom: 10px;
-          transition: 0.2s;
-          cursor: pointer;
-          &:hover {
-              color: white;
-          }
+        font-size: 30px;
+        margin-bottom: 10px;
+        transition: 0.2s;
+        cursor: pointer;
+        &:hover {
+          color: white;
+        }
       }
       .background-tab {
-        color: ${props => props.tab == "background-tab" ? "#e8e8e8" : "#515151"}
+        color: ${(props) =>
+          props.tab == "background-tab" ? "#e8e8e8" : "#515151"};
       }
       .photos-tab {
-        color: ${props => props.tab == "photos-tab" ? "#e8e8e8" : "#515151"}
+        color: ${(props) =>
+          props.tab == "photos-tab" ? "#e8e8e8" : "#515151"};
       }
       .misc-tab {
-        color: ${props => props.tab == "misc-tab" ? "#e8e8e8" : "#515151"}
+        color: ${(props) => (props.tab == "misc-tab" ? "#e8e8e8" : "#515151")};
       }
-
     }
   }
   .container {
-      width: calc(100% - 200px);
-      height: 70%;
-      padding: 0px 50px;
+    width: calc(100% - 200px);
+    height: 80%;
+    padding: 0px 20px;
   }
 `;
 
-
-export const StyledContainer = styled.div`
+export const StyledContainerBg = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  padding: 0px 10px;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+  }
+  scrollbar-width: 0px;
+  h2 {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed grey;
+  }
   label {
-      margin-bottom: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #d1d1d1;
+    output {
+      color: grey;
+      margin-left: 10px;
+      align-self: right;
+    }
   }
-  input {
+  .slider {
     appearance: none;
-      margin-bottom: 40px;
-      background-color: white;
-      outline: none;
-      height: 2px;
-&::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px; /* Set a specific slider handle width */
-  height: 10px;
-  transform: rotate(45deg); /* Slider handle height */
-  background: white; /* Green background */
-  cursor: pointer; /* Cursor on hover */
-}
+    margin-bottom: 40px;
+    background-color: white;
+    outline: none;
+    height: 2px;
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 10px; /* Set a specific slider handle width */
+      height: 10px;
+      transform: rotate(45deg); /* Slider handle height */
+      background: white; /* Green background */
+      cursor: pointer; /* Cursor on hover */
+    }
   }
-  
-`
+  .radio-container {
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #d1d1d1;
+    .radio {
+      margin-left: 15px;
+      margin-right: 10px;
+      height: 25px;
+    }
+
+    .radio:nth-of-type(1) {
+      margin-left: 0px;
+    }
+    form {
+      height: 25px;
+      display: flex;
+      font-family: Arial, Helvetica, sans-serif;
+      .text {
+        margin-left: 15px;
+        margin-right: 10px;
+        background-color: #d1d1d1;
+        color: black;
+        border-style: none;
+        height: 25px;
+        padding-left: 10px;
+        font-size: 14px;
+        border-radius: 3px;
+        outline: none;
+      
+        &:disabled {
+          background-color: grey;
+        }
+      }
+      button {
+        background-color: #363636;
+        color: white;
+        border-style: none;
+        height: 25px;
+        padding: 0px 15px;
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 14px;
+        border-radius: 3px;
+      }
+      output {
+        background-color:#69ab0c; // magenta #d10826;
+        color: white;
+        border-radius: 15px;
+        border-style: none;
+        height: 25px;
+        padding: 0px 15px;
+        margin-left: 15px;
+        font-weight: bold;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        
+      }
+    }
+  }
+`;
+
+export const StyledContainerInter = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  padding: 0px 10px;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+  }
+  scrollbar-width: 0px;
+  h2 {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed grey;
+  }
+  label {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #d1d1d1;
+    output {
+      color: grey;
+      margin-left: 10px;
+      align-self: right;
+    }
+  }
+  .slider {
+    appearance: none;
+    margin-bottom: 40px;
+    background-color: white;
+    outline: none;
+    height: 2px;
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 10px; /* Set a specific slider handle width */
+      height: 10px;
+      transform: rotate(45deg); /* Slider handle height */
+      background: white; /* Green background */
+      cursor: pointer; /* Cursor on hover */
+    }
+  }
+  .radio-container {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #d1d1d1;
+    .radio {
+      margin-left: 15px;
+      margin-right: 10px;
+      height: 25px;
+    }
+    .text {
+      margin-left: 15px;
+      margin-right: 10px;
+    }
+    .radio:nth-of-type(1) {
+      margin-left: 0px;
+    }
+  }
+  .switch-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    label {
+      margin-bottom: 40px;
+    }
+    .switch {
+      position: relative;
+
+      width: 65px;
+      height: 34px;
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+
+    .slider2 {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+    .slider2:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider2 {
+      background-color: green;
+    }
+
+    input:focus + .slider2 {
+      box-shadow: 0 0 1px #2196f3;
+    }
+
+    input:checked + .slider2:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+  }
+`;
