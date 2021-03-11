@@ -10,8 +10,9 @@ import {
   setKeyword,
   setModified,
   setQueue,
+  setFormat24,
+  setSeconds,
 } from "../../store/settings/settingsActions";
-import {useQueryClient, QueryObserver} from 'react-query'
 import { connect } from "react-redux";
 
 
@@ -30,8 +31,8 @@ function BackgroundSettings(props) {
       <input className="slider" type="range" min="1" max="60" value={props.presence} onChange={(e) => {props.setPresence(parseInt(e.target.value))}}></input>
       <label>Transition<output>{props.delay}s</output></label>
       <input className="slider" type="range" min="1" max="8" value={props.delay} onChange={(e) => {props.setDelay(parseInt(e.target.value))}}></input>
-      <label>Max Brightness<output>{props.brightness}</output></label>
-      <input className="slider" type="range" min="1" max="100" value={props.brightness} onChange={(e) => { props.setBrightness(parseInt(e.target.value))}}></input>
+      <label>Dim Background<output>{props.brightness}</output></label>
+      <input className="slider" type="range" min="0" max="100" value={props.brightness} onChange={(e) => { props.setBrightness(parseInt(e.target.value))}}></input>
       <h2>Images</h2>
       <label>Relevance</label>
       <div className="radio-container">
@@ -78,6 +79,8 @@ const mapDispatchToProps = (dispatch) => {
     setKeyword: (val) => dispatch(setKeyword(val)),
     setImageQuality: (val) => dispatch(setImageQuality(val)),
     setNumberOfImages: (val) => dispatch(setNumberOfImages(val)),
+    setFormat24: (val) => dispatch(setFormat24(val)),
+    setSeconds: (val) => dispatch(setSeconds(val)),
   };
 };
 

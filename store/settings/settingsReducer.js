@@ -8,17 +8,21 @@ import {
   SET_KEYWORD,
   SET_QUEUE,
   COMMIT_CHANGES,
+  SET_24HR,
+  SET_SECONDS,
 } from "./settingsTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   presence: 4,
   delay: 8,
-  brightness: 100,
+  brightness: 0,
   relevance: "weather", //time, topic /Read ONLY
   imageQuality: "optimized", //optimized, /Read ONLY
   numOfImages: 10, ///Read ONLY
   keyword: "", //Read ONLY
+  format24Hr: false,
+  secondsVisible: true,
   queueChanges: {
     relevance: "weather",
     imageQuality: "optimized",
@@ -63,6 +67,12 @@ export const settingsReducer = (state = initialState, action) => {
         return {
             ...state, ...action.payload
         }
+    }
+    case SET_24HR: {
+        return {...state, format24Hr: action.payload }
+    }
+    case SET_SECONDS: {
+        return {...state, secondsVisible: action.payload}
     }
     default: {
       return state;

@@ -10,3 +10,6 @@ export const SET_KEYWORD = "SET_KEYWORD"
 
 export const SET_QUEUE = "SET_QUEUE"
 export const COMMIT_CHANGES = "COMMIT_CHANGES"
+
+export const SET_24HR = "SET_24HR"
+export const SET_SECONDS = "SET_SECONDS"

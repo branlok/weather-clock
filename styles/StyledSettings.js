@@ -326,9 +326,8 @@ export const StyledContainerInter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    label {
-      margin-bottom: 40px;
-    }
+    border-bottom: 2px solid rgba(255,255,255,0.05);
+    margin-bottom: 20px;
     .switch {
       position: relative;
 

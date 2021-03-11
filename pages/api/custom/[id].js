@@ -13,7 +13,6 @@ export default async (req, res) => {
     `http://api.openweathermap.org/data/2.5/weather?q=toronto&appid=${process.env.WEATHER_KEY}`
   );
   const weatherData = await weather.json();
-  console.log(unsplashData, weather);
   res.status(200).json({weatherData, unsplashData: unsplashData.results })
   
 }

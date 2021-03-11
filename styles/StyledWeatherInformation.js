@@ -15,7 +15,7 @@ export const StyledWeatherInformation = styled.div`
     align-items: center;
     flex-direction: column;
     border-radius: 15px;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.8);
     padding: 1.5vw 7vw;
     animation: ${fadeIn} 1s ease 1 backwards;
     animation-delay: 1s;
