@@ -2,9 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { StyledMainContainer } from "../styles/StyledMainContainer";
 import { StyledWeatherInformation } from "../styles/StyledWeatherInformation";
+import { StyledButtonFS } from '../styles/StyledButtonFS';
 import { useQueryClient, useQuery } from "react-query";
 import Clock from "./Clock";
 import Cog from "../styles/svg/settings-svgrepo-com-2.svg";
+import FullScreen from "../styles/svg/full-screen-selector-svgrepo-com.svg";
 
 function usePosts(relevance, keyword) {
     const param = relevance !== "topic" ? relevance : keyword
@@ -21,6 +23,8 @@ function Infographics(props) {
 // console.log(props.relevance);
 //   const data = queryClient.getQueryData(props.relevance);
 //   console.log(data)
+
+  
 
   const {data, status} = usePosts(props.relevance, props.keyword);
 
@@ -41,6 +45,7 @@ function Infographics(props) {
           className="settings-button"
           onClick={() => props.setShowSettings(true)}
         />
+        <StyledButtonFS onClick={props.handle.enter}><FullScreen className="fullscreen-svg"/></StyledButtonFS>
       </StyledMainContainer>
     );
   } else {

@@ -11,6 +11,7 @@ const fadeIn = keyframes`
 
 export const StyledWeatherInformation = styled.div`
     display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;

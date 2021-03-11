@@ -10,6 +10,17 @@ import { connect } from "react-redux";
 
 
 function InterfaceSettings(props) {
+
+    // let getPosition = () => {
+    //     return new Promise(function (resolve, reject) {
+    //       navigator.geolocation.getCurrentPosition(resolve, reject);
+    //     });
+    //   }
+    
+    //   useEffect(() => {
+    //     console.log(getPosition())
+    //   })
+
     return (    
         <StyledContainerInter>
             <h2>Clock</h2>
@@ -32,6 +43,29 @@ function InterfaceSettings(props) {
             <input className="radio" type="radio" value="Weather" name="gender" /> Mini
             <input className="radio" type="radio" value="Time of Day" name="gender" /> Normal
             <input className="radio" type="radio" value="Random" name="gender" /> Large
+            </div>
+            <h2>Pin Notes</h2>
+            <div className="switch-container">
+                    <label> Enable </label>
+                    <label className="switch">
+                    <input type="checkbox" onChange={(e) => props.setSeconds(!props.secondsVisible)} checked={props.secondsVisible}/>
+                    <span className="slider2"></span>
+                    </label>
+            </div>
+            <h2>Weather</h2>
+            <div className="switch-container">
+                    <label> Enable </label>
+                    <label className="switch">
+                    <input type="checkbox" onChange={(e) => props.setSeconds(!props.secondsVisible)} checked={props.secondsVisible}/>
+                    <span className="slider2"></span>
+                    </label>
+            </div>
+            <div className="switch-container">
+                    <label> Track Location </label>
+                    <label className="switch">
+                    <input type="checkbox" onChange={(e) => props.setSeconds(!props.secondsVisible)} checked={props.secondsVisible}/>
+                    <span className="slider2"></span>
+                    </label>
             </div>
         </StyledContainerInter>
     )

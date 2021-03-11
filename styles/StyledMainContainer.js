@@ -9,6 +9,18 @@ const fadeIn = keyframes`
     }
 `;
 
+const fadeOut = keyframes`
+    0% {
+        {fill: white}
+    }
+    50% {
+        {fill: white}
+    }
+    100% {
+        {fill: grey}
+    }
+`;
+
 export const StyledMainContainer = styled.div`
   position: absolute;
   top: 0px;
@@ -30,6 +42,12 @@ export const StyledMainContainer = styled.div`
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     animation: ${fadeIn} 0.5s ease 1 backwards;
     animation-delay: 0.5s;
+    color: #e3e3e3;//offwhite
+    //backdrop-filter: blur(2px);
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50px;
+    padding: 10px 40px;
+   // margin-bottom: 20px;
   }
   .settings-button {
       position: absolute;
@@ -38,8 +56,8 @@ export const StyledMainContainer = styled.div`
       height: 25px;
       transition: 0.5s;
       cursor: pointer;
-      animation: ${fadeIn} 0.5s ease 1 backwards;
-      
+      fill: grey;
+      animation: ${fadeOut} 0.5s ease 1 backwards;
       &:hover {
           transform: rotate(20deg);
           fill: black;
