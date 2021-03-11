@@ -1,4 +1,4 @@
-import {ADJUST_DELAY_DURATION, ADJUST_PRESENCE_DURATION, ADJUST_BRIGHTNESS_DURATION, SET_NUMBER_OF_IMAGES, SET_IMAGE_QUALITY, SET_RELEVANCE, SET_KEYWORD} from './settingsTypes';
+import {ADJUST_DELAY_DURATION, ADJUST_PRESENCE_DURATION, ADJUST_BRIGHTNESS_DURATION, SET_NUMBER_OF_IMAGES, SET_IMAGE_QUALITY, SET_RELEVANCE, SET_KEYWORD, SET_QUEUE, COMMIT_CHANGES} from './settingsTypes';
  
 //Animation
 export const adjustDelayDuration = (values) => {
@@ -53,4 +53,17 @@ export const setNumberOfImages = (values) => {
     }
 }
 
+export const setQueue = (type, values) => {
+    return {
+        type: SET_QUEUE,
+        payload: {[type]: values}
+    }
+}
+
+export const setCommit = (values) => {
+    return {
+        type: COMMIT_CHANGES,
+        payload: values
+    }
+}
 

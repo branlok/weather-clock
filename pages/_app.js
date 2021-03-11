@@ -2,7 +2,6 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { QueryClientProvider, QueryClient } from "react-query";
 import '../styles/globals.css'
 import {wrapper} from '../store/store';
-
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -31,6 +30,7 @@ function App({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
+         
         </QueryClientProvider>
       </ThemeProvider>
     </>

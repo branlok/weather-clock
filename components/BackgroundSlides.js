@@ -5,10 +5,23 @@ import { connect } from "react-redux";
 import { StyledLoadingScreen } from "../styles/StyledLoadingScreen";
 import { useQueryClient } from "react-query";
 import {setModified} from '../store/general/generalActions';
+import {useQuery} from 'react-query';
+
+
+function usePosts(relevance, keyword) {
+    const param = relevance !== "topic" ? relevance : keyword
+    //weather and time needs to be chagned later
+    return useQuery(param, async () => {
+      let data = await fetch(`/api/custom/${param}`).then((res) => res.json());
+      return data;
+    }, {refetchOnWindowFocus: false});
+  }
+
 
 function BackgroundSlides(props) {
-  const queryClient = useQueryClient();
-  const { data, status } = queryClient.getQueryState(props.relevance);
+//   const queryClient = useQueryClient();
+  const { data, status } = usePosts(props.relevance, props.keyword);
+//   const { data, status } = queryClient.getQueryState(props.relevance);
 
   const [imgsLoaded, setImgsLoaded] = useState(false)
   
@@ -18,10 +31,12 @@ function BackgroundSlides(props) {
     highest: "&w=1500&fm=webp&dpr=2"
 }
 
-//"&w=1500&dpr=2"
+
 useEffect(() => {
-    if (props.modified) {
+    if (status === "success") {
         setImgsLoaded(false)
+        props.loadingImages(true)
+        console.log("i ran here")
         const loadImage = (image) => {
             return new Promise((resolve, reject) => {
               const loadImg = new Image()
@@ -35,13 +50,9 @@ useEffect(() => {
           Promise.all(data.unsplashData.slice(0, props.numOfImages).map(image => loadImage(image)))
             .then(() => setImgsLoaded(true))
             .then(() => props.loadingImages())
-            .then(() => props.setModified(false))
             .catch(err => console.log("Failed to load images", err))
-    } else {
-         //modified is always true after settings change and async event. In the case of unmodified, keep imgloaded page open.
-        setImgsLoaded(true)
     }
-  }, [props.modified])
+  }, [status])
 
 
   let arrangeImage = (array) => {
@@ -51,9 +62,10 @@ useEffect(() => {
     return imageEle;
   }
 
-  return (
+  if (status === "success") {
+      return (
     <>
-      {imgsLoaded ? 
+      {imgsLoaded  ? 
       <>
       <StyledLoadingScreen></StyledLoadingScreen>
       <StyledBGContainer
@@ -64,13 +76,15 @@ useEffect(() => {
       >
         {arrangeImage(data.unsplashData.slice(0, props.numOfImages))}
       </StyledBGContainer>
-      
+      {/* <StyledLoadingScreen><div>loading and optimizing images</div></StyledLoadingScreen> */}
       </>
       : (
-        <StyledLoadingScreen>loading and optimizing images</StyledLoadingScreen>
+        <StyledLoadingScreen>Optimizing images</StyledLoadingScreen>
     )}
     </>
-  );
+  );} else {
+    return <StyledLoadingScreen>Downloading Images</StyledLoadingScreen>
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -89,7 +103,7 @@ const mapStateToProps = (state) => {
 //step 2
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadingImages: () => dispatch(loadingImages(false)),
+    loadingImages: (val) => dispatch(loadingImages(val)),
     setModified: (val) => dispatch(setModified(val)),
   };
 };

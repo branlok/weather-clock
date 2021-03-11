@@ -4,12 +4,12 @@ import BackgroundSettings from './BackgroundSettings';
 import InterfaceSettings from './InterfaceSettings';
 import Misc from './Misc';
 import Close from "../../styles/svg/close-svgrepo-com(1).svg"
-import {setModified} from "../../store/general/generalActions";
+import {setModified, loadingImages} from "../../store/general/generalActions";
+import {setCommit} from "../../store/settings/settingsActions";
 import { connect } from "react-redux";
 function Settings(props) {
 
     const [tab, setTab] = useState("background-tab");
-    const [fetchReq, setFetchreq] = useState(false);
 
     return (
         <StyledSettings>
@@ -25,13 +25,13 @@ function Settings(props) {
                 </ul> 
             </nav>
             <div className="container">
-               {tab === "background-tab" && <BackgroundSettings setFetchreq={setFetchreq}/>}
-               {tab === "photos-tab" && <InterfaceSettings setFetchreq={setFetchreq}/>}
+               {tab === "background-tab" && <BackgroundSettings/>}
+               {tab === "photos-tab" && <InterfaceSettings/>}
                 {tab === "misc-tab" && <Misc/>}
             </div>
         </StyledConfigContainer>
             <button className="reset-button">Reset All</button>
-           <Close className="settings-button" onClick={() => {props.setShowSettings(false); fetchReq && props.setModified(true)}}></Close>
+           <Close className="settings-button" onClick={() => {props.setShowSettings(false);  props.setCommit(props.queueChanges);}}></Close>
         </StyledSettings>
     )
 }
@@ -39,6 +39,7 @@ function Settings(props) {
 const mapStateToProps = (state) => {
     return {
       modified: state.general.modified,
+      queueChanges: state.settings.queueChanges,
     };
   };
   
@@ -46,6 +47,8 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     return {
       setModified: (val) => dispatch(setModified(val)),
+      setCommit: (val) => dispatch(setCommit(val)),
+      loadingImages: () => dispatch(loadingImages(true))
 
     };
   };

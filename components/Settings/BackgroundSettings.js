@@ -9,34 +9,18 @@ import {
   setImageQuality,
   setKeyword,
   setModified,
+  setQueue,
 } from "../../store/settings/settingsActions";
+import {useQueryClient, QueryObserver} from 'react-query'
 import { connect } from "react-redux";
+
 
 function BackgroundSettings(props) {
     let [keyword, setKeyword] = useState("");
-    let [originalSettings, setOriginalSettings] = useState([props.relevance, props.imageQuality, props.numOfImages, props.keyword]);
-
-    useEffect(() => {
-        let currentChanges = [props.relevance, props.imageQuality, props.numOfImages, props.keyword];
-        let modified = currentChanges.filter((setting) => !originalSettings.includes(setting)); //if even one changes, it will return it.
-
-        if (modified.length > 0) { 
-            console.log(modified)
-            props.setFetchreq(true)
-        } else {
-            console.log("modified")
-            console.log([props.relevance, props.imageQuality, props.numOfImages, props.keyword] )
-            props.setFetchreq(false)
-        }
-    })
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // DOM appraoch
-        // const [input] = e.target.elements
-        // const userKeyword = input.value;
-
-        props.setKeyword(keyword);
+        props.setQueue("keyword", keyword);
         setKeyword("");
     }
   return (
@@ -51,20 +35,20 @@ function BackgroundSettings(props) {
       <h2>Images</h2>
       <label>Relevance</label>
       <div className="radio-container">
-        <input className="radio" type="radio" value="weather" name="relevance" onChange={(e) => {props.setRelevance(e.target.value)}} checked={props.relevance === "weather"}/> Weather Conditions
-        <input className="radio" type="radio" value="time" name="relevance" onChange={(e) => {props.setRelevance(e.target.value)}} checked={props.relevance === "time"} /> Time of Day
-        <input className="radio" type="radio" value="topic" name="relevance" onChange={(e) => {props.setRelevance(e.target.value)}}  checked={props.relevance === "topic"} /> Custom
-        {props.relevance === "topic" && <form onSubmit={handleSubmit}>{props.keyword ? <output>{props.keyword}</output> : <input className="text" pattern="[A-Za-z]{1,18}" minLength="1" placeholder={"1 - 18 chars - no space"} required value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={props.keyword && true}></input> } <button type="submit">{props.keyword ? "Reset" : "Save"}</button></form>}
+        <input className="radio" type="radio" value="weather" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}} checked={props.queueChanges.relevance === "weather"}/> Weather Conditions
+        <input className="radio" type="radio" value="time" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}} checked={props.queueChanges.relevance === "time"} /> Time of Day
+        <input className="radio" type="radio" value="topic" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}}  checked={props.queueChanges.relevance === "topic"} /> Custom
+        {props.queueChanges.relevance === "topic" && <form onSubmit={handleSubmit}>{props.queueChanges.keyword ? <output>{props.queueChanges.keyword}</output> : <input className="text" pattern="[A-Za-z]{1,18}" minLength="1" placeholder={"1 - 18 chars - no space"} required value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={props.queueChanges.keyword && true}></input> } <button type="submit">{props.queueChanges.keyword ? "Reset" : "Save"}</button></form>}
    
       </div>
       <label>Image Quality</label>
       <div className="radio-container">
-        <input className="radio" type="radio" value="optimized" name="quality" onChange={(e) => {props.setImageQuality(e.target.value)}} checked={props.imageQuality === "optimized"} /> Optimized
-        <input className="radio" type="radio" value="lowest" name="quality"  onChange={(e) => {props.setImageQuality(e.target.value)}}  checked={props.imageQuality === "lowest"} /> Low
-        <input className="radio" type="radio" value="highest" name="quality"   onChange={(e) => {props.setImageQuality(e.target.value)}} checked={props.imageQuality === "highest"} /> Highest
+        <input className="radio" type="radio" value="optimized" name="quality" onChange={(e) => {props.setQueue("imageQuality", e.target.value)}} checked={props.queueChanges.imageQuality === "optimized"} /> Optimized
+        <input className="radio" type="radio" value="lowest" name="quality"  onChange={(e) => {props.setQueue("imageQuality", e.target.value)}}  checked={props.queueChanges.imageQuality === "lowest"} /> Low
+        <input className="radio" type="radio" value="highest" name="quality"   onChange={(e) => {props.setQueue("imageQuality", e.target.value)}} checked={props.queueChanges.imageQuality === "highest"} /> Highest
       </div>
-      <label>Number of Images <output>{props.numOfImages}</output></label>
-      <input className="slider" type="range" min="2" max="20" value={props.numOfImages} onChange={(e) => {e.preventDefault(); props.setNumberOfImages(parseInt(e.target.value))}} ></input>
+      <label>Number of Images <output>{props.queueChanges.numOfImages}</output></label>
+      <input className="slider" type="range" min="2" max="20" value={props.queueChanges.numOfImages} onChange={(e) => {e.preventDefault(); props.setQueue("numOfImages", parseInt(e.target.value))}} ></input>
     </StyledContainerBg>
   );
 }
@@ -78,6 +62,7 @@ const mapStateToProps = (state) => {
     imageQuality: state.settings.imageQuality,
     numOfImages: state.settings.numOfImages,
     keyword: state.settings.keyword,
+    queueChanges: state.settings.queueChanges,
   };
 };
 
@@ -87,6 +72,8 @@ const mapDispatchToProps = (dispatch) => {
     setDelay: (val) => dispatch(adjustDelayDuration(val)),
     setPresence: (val) => dispatch(adjustPresenceDuration(val)),
     setBrightness: (val) => dispatch(adjustBrightnessDuration(val)),
+    //TO QUEUE
+    setQueue: (type, val) => dispatch(setQueue(type, val)),
     setRelevance: (val) => dispatch(setRelevance(val)),
     setKeyword: (val) => dispatch(setKeyword(val)),
     setImageQuality: (val) => dispatch(setImageQuality(val)),

@@ -7,35 +7,40 @@ import {StyledLoadingScreen} from '../styles/StyledLoadingScreen';
 import { connect } from "react-redux";
 import { adjustDelayDuration } from "../store/settings/settingsActions";
 import Settings from "../components/Settings";
+import { useQueryClient, QueryObserver } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 
-function usePosts(relevance) {
-  return useQuery(relevance, async () => {
-    let data = await fetch(`/api/popularImg`).then((res) => res.json());
+
+function usePosts(relevance, keyword) {
+  const param = relevance !== "topic" ? relevance : keyword
+  return useQuery(param, async () => {
+    let data = await fetch(`/api/custom/${param}`).then((res) => res.json());
     return data;
-  });
+  }, {refetchOnWindowFocus: false});
 }
 
 function Home(props) {
-  const response = usePosts(props.relevance, props.keyword);
+ const response = usePosts(props.relevance, props.keyword);
+  console.log(props.relevance);
+
   const [showSettings, setShowSettings] = useState(false)
-  
-  if (response.isSuccess) {
+  //console.log(response.data, response.status);
+
     return (
-      <div>
+      <div> 
         <Head>
           <title>Weather Clock App</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="main-wrapper">
-          {!showSettings && <BackgroundSlides/>}
-          {!props.loadingImages && !props.modified && <Infographics setShowSettings={setShowSettings}/>}
+          {<BackgroundSlides/>}
+          {<Infographics setShowSettings={setShowSettings}/>}
           {showSettings && <Settings showSettings={showSettings} setShowSettings={setShowSettings}/>}
+       
         </main>
+        <ReactQueryDevtools initialIsOpen={true}/>
       </div>
     );
-  } else {
-    return <StyledLoadingScreen>Getting Weather and getting Data</StyledLoadingScreen>; 
-  }
 }
 
 //step 1

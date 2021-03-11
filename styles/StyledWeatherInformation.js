@@ -17,7 +17,8 @@ export const StyledWeatherInformation = styled.div`
     border-radius: 15px;
     background-color: rgba(0,0,0,0.9);
     padding: 1.5vw 7vw;
-    animation: ${fadeIn} 0.5s ease 1 backwards;
+    animation: ${fadeIn} 1s ease 1 backwards;
+    animation-delay: 1s;
     .temperature {
         font-size: 5vw;
         height: calc(100% - 20px);
