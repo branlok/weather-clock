@@ -44,7 +44,7 @@ function Note({ noteID, editorState, ...props }) {
     return getDefaultKeyBinding(e);
   };
 
-  let [note, setNote] = useState({ title: "title", body: "body" });
+  let [note, setNote] = useState({ title: "untitled", body: "body" });
   let [edit, setEdit] = useState(false);
   let [color, setColor] = useState("#c9c9c9");
 
