@@ -27,10 +27,10 @@ function BackgroundSettings(props) {
   return (
     <StyledContainerBg>
     <h2>Animation</h2>
-      <label>Presence<output>{props.presence}s</output></label> 
-      <input className="slider" type="range" min="1" max="60" value={props.presence} onChange={(e) => {props.setPresence(parseInt(e.target.value))}}></input>
-      <label>Transition<output>{props.delay}s</output></label>
-      <input className="slider" type="range" min="1" max="8" value={props.delay} onChange={(e) => {props.setDelay(parseInt(e.target.value))}}></input>
+      <label>Presence<output>{props.presence/1000}s</output></label> 
+      <input className="slider" type="range" min="1" max="60" value={props.presence/1000} onChange={(e) => {props.setPresence(parseInt(e.target.value * 1000))}}></input>
+      <label>Transition<output>{props.delay/1000}s</output></label>
+      <input className="slider" type="range" min="1" max="8" value={props.delay/1000} onChange={(e) => {props.setDelay(parseInt(e.target.value * 1000))}}></input>
       <label>Dim Background<output>{props.brightness}</output></label>
       <input className="slider" type="range" min="0" max="100" value={props.brightness} onChange={(e) => { props.setBrightness(parseInt(e.target.value))}}></input>
       <h2>Images</h2>
@@ -79,8 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     setKeyword: (val) => dispatch(setKeyword(val)),
     setImageQuality: (val) => dispatch(setImageQuality(val)),
     setNumberOfImages: (val) => dispatch(setNumberOfImages(val)),
-    setFormat24: (val) => dispatch(setFormat24(val)),
-    setSeconds: (val) => dispatch(setSeconds(val)),
+
   };
 };
 

@@ -1,12 +1,15 @@
-import React from "react";
+import React  from "react";
 import { connect } from "react-redux";
 import { StyledMainContainer } from "../styles/StyledMainContainer";
 import { StyledWeatherInformation } from "../styles/StyledWeatherInformation";
+import Notes from "./NotesWidget"
 import { StyledButtonFS } from '../styles/StyledButtonFS';
 import { useQueryClient, useQuery } from "react-query";
 import Clock from "./Clock";
 import Cog from "../styles/svg/settings-svgrepo-com-2.svg";
 import FullScreen from "../styles/svg/full-screen-selector-svgrepo-com.svg";
+import PinnedNote from "./NotesWidget/PinnedNote";
+import {useTransition, animated} from 'react-spring';
 
 function usePosts(relevance, keyword) {
     const param = relevance !== "topic" ? relevance : keyword
@@ -18,15 +21,9 @@ function usePosts(relevance, keyword) {
 
 
 function Infographics(props) {
-//   const queryClient = useQueryClient();
-// //   const data = queryClient.getQueryData(props.relevance);
-// console.log(props.relevance);
-//   const data = queryClient.getQueryData(props.relevance);
-//   console.log(data)
-
-  
 
   const {data, status} = usePosts(props.relevance, props.keyword);
+
 
   if (status == "success" && !props.loadingImages) {
     return (
@@ -41,17 +38,21 @@ function Infographics(props) {
             {data.weatherData.weather[0].description}
           </p>
         </StyledWeatherInformation>
+        {props.notes && <Notes />}
+        {props.pinned && props.notes && <PinnedNote/>}
         <Cog
           className="settings-button"
           onClick={() => props.setShowSettings(true)}
         />
-        <StyledButtonFS onClick={props.handle.enter}><FullScreen className="fullscreen-svg"/></StyledButtonFS>
+        <StyledButtonFS onClick={props.handle.enter} ><FullScreen className="fullscreen-svg"/></StyledButtonFS>
       </StyledMainContainer>
     );
   } else {
     return null;
   }
 }
+
+
 
 //step 1
 const mapStateToProps = (state) => {
@@ -61,6 +62,8 @@ const mapStateToProps = (state) => {
     relevance: state.settings.relevance,
     keyword: state.settings.keyword,
     loadingImages: state.general.loadingImages,
+    pinned: state.notes.pinned,
+    notes: state.settings.notes,
   };
 };
 

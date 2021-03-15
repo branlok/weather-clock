@@ -13,3 +13,8 @@ export const COMMIT_CHANGES = "COMMIT_CHANGES"
 
 export const SET_24HR = "SET_24HR"
 export const SET_SECONDS = "SET_SECONDS"
+
+export const SET_WEATHER = "SET_WEATHER"
+export const SET_NOTES = "SET_NOTES"
+
+export const SET_COORDINATES = "SET_COORDINATES"

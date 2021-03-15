@@ -25,7 +25,7 @@ function usePosts(relevance, keyword) {
 
 function Home(props) {
   const handle = useFullScreenHandle();
-  
+
   const response = usePosts(props.relevance, props.keyword);
   console.log(props.relevance);
 
@@ -37,10 +37,12 @@ function Home(props) {
       <Head>
         <title>Weather Clock App</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta charset="utf-8" />
       </Head>
-      <FullScreen handle={handle}>
-        <main className="main-wrapper">
-          {<BackgroundSlides />}
+
+      <main className="main-wrapper">
+        <FullScreen handle={handle}>
+          {<BackgroundSlides showSettings={showSettings} />}
           {<Infographics setShowSettings={setShowSettings} handle={handle} />}
           {showSettings && (
             <Settings
@@ -48,9 +50,9 @@ function Home(props) {
               setShowSettings={setShowSettings}
             />
           )}
-            {/* <StyledButtonFS className="fullscreen-button" style onClick={handle.enter}>Enter FullScreen</StyledButtonFS> */}
-        </main>
-      </FullScreen>
+        </FullScreen>
+      </main>
+
       {/* <ReactQueryDevtools initialIsOpen={true} /> */}
     </div>
   );

@@ -1,7 +1,6 @@
 import {LOADING_IMAGE, MODIFIED} from './generalTypes';
  
 export const loadingImages = (values) => {
-    console.log("yepe")
     return {
         type: LOADING_IMAGE,
         payload: values

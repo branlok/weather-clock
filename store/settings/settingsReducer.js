@@ -10,21 +10,34 @@ import {
   COMMIT_CHANGES,
   SET_24HR,
   SET_SECONDS,
+  SET_NOTES,
+  SET_WEATHER,
+  SET_COORDINATES,
 } from "./settingsTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
-  presence: 4,
-  delay: 8,
-  brightness: 0,
-  relevance: "weather", //time, topic /Read ONLY
+  //ANIMATION
+  presence: 10000, //ms
+  delay: 3000, //ms
+  brightness: 10,
+  //IMAGE FETCH PARAMS
+  relevance: "time", //weather, time, topic /Read ONLY
   imageQuality: "optimized", //optimized, /Read ONLY
   numOfImages: 10, ///Read ONLY
   keyword: "", //Read ONLY
+  //TIME
   format24Hr: false,
   secondsVisible: true,
+  //WIDGETS
+  weather: false, //requires geolocation
+  notes: true,
+  //PERMISSIONS
+  geolocation: false,
+  latitude: "",
+  longitude: "",
   queueChanges: {
-    relevance: "weather",
+    relevance: "time",
     imageQuality: "optimized",
     numOfImages: 10,
     keyword: "",
@@ -64,15 +77,27 @@ export const settingsReducer = (state = initialState, action) => {
       };
     }
     case COMMIT_CHANGES: {
-        return {
-            ...state, ...action.payload
-        }
+      return {
+        ...state,
+        ...action.payload,
+      };
     }
+    //UI - INTERFACE PEREFERENCES
     case SET_24HR: {
-        return {...state, format24Hr: action.payload }
+      return { ...state, format24Hr: action.payload };
     }
     case SET_SECONDS: {
-        return {...state, secondsVisible: action.payload}
+      return { ...state, secondsVisible: action.payload };
+    }
+    //WIDGET TOGGLES
+    case SET_NOTES: {
+        return {...state, notes: action.payload}
+    }
+    case SET_WEATHER: {
+        return {...state, weather: action.payload}
+    }
+    case SET_COORDINATES: {
+        return {...state, ...action.payload}
     }
     default: {
       return state;

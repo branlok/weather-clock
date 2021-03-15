@@ -14,34 +14,40 @@ to {
 const ImageFadeAnimation = ({ viewTime, delay, numOfImg }) => {
   let totalAnimationTime = (viewTime + delay) * numOfImg;
   let animationInterval = viewTime + delay;
-  console.log(totalAnimationTime, animationInterval);
   return keyframes`
   0% {
     opacity:1;
+    transform: translate3d(0, 0, 0);
   }
   ${(viewTime / totalAnimationTime) * 100}% {
     opacity: 1; 
+    transform: translate3d(0, 0, 0);
   }
   ${(animationInterval / totalAnimationTime) * 100}% {
       opacity: 0;
+      transform: translate3d(0, 0, 0);
   }
   ${100 - (delay / totalAnimationTime) * 100}% {
       opacity: 0;
+      transform: translate3d(0, 0, 0);
   }
   100% {
       opacity: 1;
+      transform: translate3d(0, 0, 0);
+      
   }
 
 `;
 };
 
+
 export const StyledBGContainer = styled.div`
   height: 100vh;
   width: 100vw;
   position: relative;
-  perspective: 500px;
   overflow: hidden;
-  animation: ${fadeIn} 1s ease 1 backwards;
+  animation: ${fadeIn} 0.5s ease 1 backwards;
+  display: ${props => props.settingsOpen ? "none" : "block"}; //minimum optimization
   & img {
     position: absolute;
     top: 0;
@@ -49,14 +55,15 @@ export const StyledBGContainer = styled.div`
     height: 100%;
     width: 100%;
     object-fit: cover;
-    transform: translateZ(0);
+    /* transform: translateZ(0); */
     animation-name: ${(props) => ImageFadeAnimation(props)};
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    animation-play-state: ${(props) =>
-      props.paused
+    object-position: center;
+    /* animation-play-state: ${(props) =>
+      props.settingsOpen
         ? "paused"
-        : "running"}; //use this for interception during settings
+        : "running"}; //use this for interception during settings */
     animation-duration: ${({ viewTime, delay, numOfImg }) =>
       `${(viewTime + delay) * numOfImg}s`};
   }
@@ -80,3 +87,21 @@ export const StyledBGContainer = styled.div`
     animation-delay: 5s;
   } */
 `;
+
+export const StyledStaticBackground = styled.div`
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  animation: ${fadeIn} 0.5s ease 1 backwards;
+  display: ${props => props.settingsOpen ? "none" : "block"}; 
+  & img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    //object-fit: cover;
+    background: transparent;
+  }
+`

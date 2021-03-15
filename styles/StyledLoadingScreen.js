@@ -20,6 +20,7 @@ export const StyledLoadingScreen = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.9);
+  background-color: #242424;
   color: #f5f5f5;
   font-family: "Work Sans", sans-serif;
   /* div {

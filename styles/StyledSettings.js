@@ -18,6 +18,31 @@ const fadeIn = keyframes`
     }
 `;
 
+
+
+const pulse = keyframes`
+    0% {
+        {opacity: 0}
+    }
+    50% {
+        {opacity: 1}
+    }
+
+    100% {
+        {opacity: 0}
+    }
+`;
+
+
+const  spin = keyframes`
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+`
+
 export const StyledSettings = styled.div`
   position: absolute;
   top: 0px;
@@ -25,7 +50,7 @@ export const StyledSettings = styled.div`
   height: 100%;
   width: 100%;
   z-index: 2;
-
+    overflow: hidden;
   background-color: #1c1c1c;
   font-family: "Work Sans", sans-serif;
   color: white;
@@ -34,7 +59,7 @@ export const StyledSettings = styled.div`
   padding: 20px;
   .title {
     h1 {
-        height: 50px;
+      height: 50px;
       font-size: 50px;
       margin-left: 20px;
     }
@@ -54,7 +79,7 @@ export const StyledSettings = styled.div`
     }
   }
   button {
-      cursor: pointer;
+    cursor: pointer;
   }
   .reset-button {
     position: absolute;
@@ -71,14 +96,15 @@ export const StyledSettings = styled.div`
     transition: 0.2s;
     border: 2px solid red;
     &:hover {
-        color: white;
-        background-color: red;
-        border: 2px solid transparnet;
+      color: white;
+      background-color: red;
+      border: 2px solid transparnet;
     }
   }
   /* .update-button {
     position: absolute;
-    background-color:${props => props.modified ? "#edb84e" :  "rgba(0,0,0,0.2)"}  ;
+    background-color:${(props) =>
+    props.modified ? "#edb84e" : "rgba(0,0,0,0.2)"}  ;
     color: white;
     font-weight: bold;
     height: 25px;
@@ -156,7 +182,6 @@ export const StyledContainerBg = styled.div`
     width: 0;
     height: 0;
   }
-  scrollbar-width: 0px;
   h2 {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -220,7 +245,7 @@ export const StyledContainerBg = styled.div`
         font-size: 14px;
         border-radius: 3px;
         outline: none;
-      
+
         &:disabled {
           background-color: grey;
         }
@@ -237,7 +262,7 @@ export const StyledContainerBg = styled.div`
         border-radius: 3px;
       }
       output {
-        background-color:#69ab0c; // magenta #d10826;
+        background-color: #69ab0c; // magenta #d10826;
         color: white;
         border-radius: 15px;
         border-style: none;
@@ -250,7 +275,6 @@ export const StyledContainerBg = styled.div`
         justify-content: center;
         align-items: center;
         font-size: 14px;
-        
       }
     }
   }
@@ -326,17 +350,29 @@ export const StyledContainerInter = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid rgba(255,255,255,0.05);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
     margin-bottom: 20px;
     .switch {
       position: relative;
-
       width: 65px;
       height: 34px;
       input {
         opacity: 0;
         width: 0;
         height: 0;
+      }
+      .loader {
+        display: ${props => props.loader ? "flex" : "none"};
+        font-size: 14px;
+        position: absolute;
+        left: -130px;
+        height: 34px;
+        width: 150px;
+        justify-content: flex-start;
+        align-items: center;
+        fill: white;
+        animation: ${pulse} 2s ease infinite;
+        
       }
     }
 

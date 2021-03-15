@@ -2,7 +2,8 @@ import styled, { keyframes, css } from "styled-components";
 
 const fadeIn = keyframes`
     from {
-        {opacity: 0}
+        {opacity: 0
+        }
     }
     to {
         {opacity: 1}
@@ -32,21 +33,25 @@ export const StyledMainContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 10vw;
+  overflow: hidden;
+
   color: #f5f5f5;
   font-family: 'Work Sans', sans-serif;
   animation: ${fadeIn} 1s ease 1 backwards;
   background-color: ${props => `rgba(0,0,0, ${(props.brightness)/100})`};
+  //  background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+    /* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ffffff",GradientType=1); */
   /* box-shadow: inset 0px 0px 250px rgba(0,0,0,0.5); */
   .time {
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     animation: ${fadeIn} 0.5s ease 1 backwards;
     animation-delay: 0.5s;
     color: #e3e3e3;//offwhite
-    //backdrop-filter: blur(2px);
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.4);
     border-radius: 50px;
-    padding: 10px 40px;
+    padding: 10px 100px;
+    font-size: calc(8vw);
+    
    // margin-bottom: 20px;
   }
   .settings-button {
