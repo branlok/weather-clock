@@ -226,6 +226,43 @@ export const StyledContainerBg = styled.div`
       margin-right: 10px;
       height: 25px;
     }
+    .weather {
+      position: relative;
+      &:before {
+        position: absolute;
+        content: "";
+        top: -24px;
+
+        left: -3px;
+        opacity: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #cc333b;
+        transform: rotate(45deg);
+        transition: 0.3s;
+      }
+      &:after {
+        position: absolute;
+        content: "require geolocation enabled";
+        top: -40px;
+        left: -10px;
+        opacity: 0;
+        padding: 10px;
+        width: 200px;
+        color: white;
+        border-radius: 10px;
+        background-color: #cc333b;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      &:hover:after{
+        opacity: 1;
+      }
+      &:hover:before{
+        color: red;
+        opacity: 1;
+      }
+    }
 
     .radio:nth-of-type(1) {
       margin-left: 0px;

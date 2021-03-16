@@ -13,6 +13,7 @@ import {
   SET_NOTES,
   SET_WEATHER,
   SET_COORDINATES,
+  RESET,
 } from "./settingsTypes";
 import { HYDRATE } from "next-redux-wrapper";
 
@@ -98,6 +99,9 @@ export const settingsReducer = (state = initialState, action) => {
     }
     case SET_COORDINATES: {
         return {...state, ...action.payload}
+    }
+    case RESET: {
+      return initialState
     }
     default: {
       return state;

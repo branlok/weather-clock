@@ -5,7 +5,7 @@ import InterfaceSettings from './InterfaceSettings';
 import Misc from './Misc';
 import Close from "../../styles/svg/close-svgrepo-com(1).svg"
 import {setModified, loadingImages} from "../../store/general/generalActions";
-import {setCommit} from "../../store/settings/settingsActions";
+import {setCommit, resetState} from "../../store/settings/settingsActions";
 import { connect } from "react-redux";
 function Settings(props) {
 
@@ -30,7 +30,7 @@ function Settings(props) {
                 {tab === "misc-tab" && <Misc/>}
             </div>
         </StyledConfigContainer>
-            <button className="reset-button">Reset All</button>
+            <button className="reset-button" onClick={() => props.resetState()}>Reset All</button>
            <Close className="settings-button" onClick={() => {props.setShowSettings(false);  props.setCommit(props.queueChanges);}}></Close>
         </StyledSettings>
     )
@@ -48,7 +48,8 @@ const mapStateToProps = (state) => {
     return {
       setModified: (val) => dispatch(setModified(val)),
       setCommit: (val) => dispatch(setCommit(val)),
-      loadingImages: () => dispatch(loadingImages(true))
+      loadingImages: () => dispatch(loadingImages(true)),
+      resetState: () => dispatch(resetState())
 
     };
   };

@@ -18,3 +18,5 @@ export const SET_WEATHER = "SET_WEATHER"
 export const SET_NOTES = "SET_NOTES"
 
 export const SET_COORDINATES = "SET_COORDINATES"
+
+export const RESET = "RESET"

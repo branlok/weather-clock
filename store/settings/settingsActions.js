@@ -12,7 +12,8 @@ import {
   SET_SECONDS,
   SET_NOTES,
   SET_WEATHER,
-  SET_COORDINATES
+  SET_COORDINATES,
+  RESET,
 } from "./settingsTypes";
 
 //Animation
@@ -115,4 +116,10 @@ export const setCoordinates = (latitude, longitude) => {
         type: SET_COORDINATES,
         payload: {latitude, longitude}
     }
+}
+
+export const resetState = (values) => {
+  return {
+    type: RESET,
+  }
 }

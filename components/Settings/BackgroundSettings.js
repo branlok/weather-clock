@@ -25,7 +25,7 @@ function BackgroundSettings(props) {
         setKeyword("");
     }
   return (
-    <StyledContainerBg>
+    <StyledContainerBg location={props.geolocation}>
     <h2>Animation</h2>
       <label>Presence<output>{props.presence/1000}s</output></label> 
       <input className="slider" type="range" min="1" max="60" value={props.presence/1000} onChange={(e) => {props.setPresence(parseInt(e.target.value * 1000))}}></input>
@@ -36,7 +36,7 @@ function BackgroundSettings(props) {
       <h2>Images</h2>
       <label>Relevance</label>
       <div className="radio-container">
-        <input className="radio" type="radio" value="weather" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}} checked={props.queueChanges.relevance === "weather"}/> Weather Conditions
+        <input disabled className="radio weather" type="radio" value="weather" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}} checked={props.queueChanges.relevance === "weather"}/> Weather Conditions
         <input className="radio" type="radio" value="time" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}} checked={props.queueChanges.relevance === "time"} /> Time of Day
         <input className="radio" type="radio" value="topic" name="relevance" onChange={(e) => {props.setQueue("relevance", e.target.value)}}  checked={props.queueChanges.relevance === "topic"} /> Custom
         {props.queueChanges.relevance === "topic" && <form onSubmit={handleSubmit}>{props.queueChanges.keyword ? <output>{props.queueChanges.keyword}</output> : <input className="text" pattern="[A-Za-z]{1,18}" minLength="1" placeholder={"1 - 18 chars - no space"} required value={keyword} onChange={(e) => setKeyword(e.target.value)} disabled={props.queueChanges.keyword && true}></input> } <button type="submit">{props.queueChanges.keyword ? "Reset" : "Save"}</button></form>}
@@ -64,6 +64,7 @@ const mapStateToProps = (state) => {
     numOfImages: state.settings.numOfImages,
     keyword: state.settings.keyword,
     queueChanges: state.settings.queueChanges,
+    geolocation: state.settings.geolocation,
   };
 };
 
