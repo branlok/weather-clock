@@ -29,7 +29,7 @@ const fadeOutT = keyframes`
         {opacity: 0}
     }
     100% {
-        {opacity: 0.1}
+        {opacity: 1}
     }
 `;
 
@@ -116,7 +116,7 @@ export const StyledContainer = styled.div`
     font-size: 16px;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 1);
-    opacity: 0.1;
+    opacity: 1;
     animation: ${fadeOutT} 1s ease backwards;
     border-style: none;
     font-weight: bold;
@@ -124,6 +124,9 @@ export const StyledContainer = styled.div`
     padding: 2px 20px;
     transition: 0.3s;
     cursor: pointer;
+    &:focus {
+      outline: 1px solid white; //testing this instead of none
+    }
     &:hover {
       opacity: 1;
     }
@@ -171,7 +174,6 @@ export const StyledNote = styled.div`
   overflow: hidden;
   transition: 0.3s;
   animation: ${translateIn} 1s ease 1;
-
   .pinned-blocker {
     position: absolute;
     top: 0px;
@@ -187,8 +189,10 @@ export const StyledNote = styled.div`
     backdrop-filter: blur(3px);
     animation: ${fadeInOpacity} 0.5s ease 1;
     border-radius: 5px;
+    color: black;
     
     button {
+      position: relative;
       border-style: none;
       margin: 10px;
       padding: 10px 15px;
@@ -206,6 +210,9 @@ export const StyledNote = styled.div`
     margin-left: -10px;
     //width: 0px;
     //animation: ${filler} 1s ease 1 forwards;
+  }
+  & .public-DraftEditorPlaceholder-root{
+    color: #696969;
   }
   & .DraftEditor-root {
     height: calc(100% - 35px);
@@ -255,7 +262,7 @@ export const StyledNote = styled.div`
     .title {
       font-weight: bold;
       overflow: hidden;
-      padding: 5px;
+      padding: 5px 5px 5px 0px;
       font-size: 18px;
       color: black;
       width: 100%;
@@ -303,12 +310,14 @@ export const StyledNote = styled.div`
       align-items: center;
       margin-right: 5px;
       border-radius: 3px;
-      background-color:#eb3b3b;
-
+      background-color: #e36666;
       transition: 0.3s;
-      color: #3d3d3d;
       color: white;
       cursor: pointer;
+      &:hover {
+        background-color:#eb3b3b;
+      }
+
     }
   }
 
@@ -319,7 +328,7 @@ export const StyledNote = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    z-index: 10;
+    z-index: 15;
     
     .circle {
       height: 15px;
@@ -350,7 +359,7 @@ export const StyledNote = styled.div`
       background-color: #c953ed;
     }
     .yellow {
-      background-color: #fff29c;
+      background-color: #f2c23f;
     }
   }
   &:hover .circle {
@@ -375,7 +384,7 @@ export const StyledNote = styled.div`
 
   input {
     background-color: transparent;
-    padding: 5px;
+    padding: 5px 5px 5px 0px;
     border-style: none;
     color: black;
     font-weight: bold;
@@ -423,7 +432,6 @@ export const StyledPinnedNote = styled(animated.div)`
   transition: 0.5s;
   & .DraftEditor-root {
     height: 100%;
-  
     word-break: break-all;
     width: 100%;
     font-size: 16px;
@@ -440,7 +448,29 @@ export const StyledPinnedNote = styled(animated.div)`
   }
   .resize-action-container {
     position: absolute;
-    bottom: 0px;
-    right: 0px;
+    bottom: 10px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    button {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      color: grey;
+      border-style: none;
+      margin: 0px 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        color: white;
+        background-color: rgba(255,255,255,0.5);
+      }
+    }
   }
 `;

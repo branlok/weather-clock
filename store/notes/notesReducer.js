@@ -16,7 +16,7 @@ export const notesReducer = (state = initialState, action) => {
             return {...state, ...action.payload};
         }
         case ADD_NOTE: {
-            return {...state, [action.payload.id]: action.payload.body, noteIDs: [...state.noteIDs, action.payload.id]}
+            return {...state, [action.payload.id]: action.payload.body, noteIDs: [action.payload.id, ...state.noteIDs]}
         }
         case UPDATE_NOTE: {
             return {...state, [action.payload.id]: action.payload.body}

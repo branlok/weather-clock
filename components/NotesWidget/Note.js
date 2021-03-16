@@ -68,7 +68,7 @@ function Note({ noteID, editorState, ...props }) {
   }
 
   return (
-    <StyledNote color={color}>
+    <StyledNote color={color} pinned={props.pinned == noteID}>
       <header>
         {!edit ? (
           <h1 className="title" onClick={() => setEdit(!edit)}>
@@ -108,7 +108,7 @@ function Note({ noteID, editorState, ...props }) {
         <div className="circle red" onClick={() => changeColor("#f06960")}></div>
         <div
           className="circle yellow"
-          onClick={() => changeColor("#fff29c")}
+          onClick={() => changeColor("#f2c23f")}
         ></div>
         <div className="circle green" onClick={() => changeColor("#5fed8c")}></div>
         <div

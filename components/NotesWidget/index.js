@@ -25,7 +25,7 @@ function Notes(props) {
         {open && <button className="add-button" onClick={() => props.addNote(createNote())}>
           New
         </button>}
-        { [...props.noteIDs].reverse().map(item => <Note key={item} noteID={item}/>)}
+        { props.noteIDs.map(item => <Note key={item} noteID={item}/>)}
       </div>
     </StyledContainer>
   );
